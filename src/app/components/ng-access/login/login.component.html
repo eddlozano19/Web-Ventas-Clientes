@@ -1,0 +1,42 @@
+<p-toast position="top-center" key="error"></p-toast>
+
+<div class="p-grid p-mt-4">
+    <div class="p-col-12 p-sm-6">
+        <div class="center">
+            <img src="../../../../assets/img/login.png" title="Aplicación web" alt="Aplicación web" >
+        </div>
+    </div><!--/p-col-12-->
+    <div class="p-col-12 p-sm-6">
+        <div class="card">
+            <h1>Ventas - Clientes</h1>
+            <h5>Acceso a usuarios registrados</h5>
+            <form #LogInForm="ngForm" (ngSubmit)="onSubmit(LogInForm)" class="forms">
+                <div class="p-fluid">
+                    <div class="p-field p-grid">
+                        <label for="usercode" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Usuario</label>
+                        <div class="p-col-12 p-md-10">
+                            <input id="usercode" name="usercode" type="text" pInputText #usercode="ngModel" [(ngModel)]="logIn.cardCode">
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="password" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Contraseña</label>
+                        <div class="p-col-12 p-md-10">
+                            <input id="password" name="password" type="password" pInputText #password="ngModel" [(ngModel)]="logIn.password">
+                        </div>
+                    </div>
+                    <div class="p-field p-grid">
+                        <label for="password" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"></label>
+                        <div class="p-col-12 p-md-10">
+                            <input [disabled]="!LogInForm.form.valid" class="btn bg-info" type="submit" value="Iniciar sesión" name="submit" />
+                            <div *ngIf="loading"><p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner></div>
+                        </div>
+                    </div>
+                </div><!--/p-fluid-->
+            </form>
+            <div style="width:60%;">
+                <br>
+                Si no cuenta con sus datos de acceso a nuestra plataforma web, solicite sus datos con su asesor de ventas. 
+            </div>
+        </div><!--/card-->
+    </div><!--/p-col-12-->
+</div><!--/p-grid-->

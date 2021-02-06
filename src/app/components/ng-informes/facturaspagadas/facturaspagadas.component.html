@@ -1,0 +1,65 @@
+<app-navbar></app-navbar>
+<div class="p-grid p-mt-2">
+    <div *ngIf="businessPartner" class="p-col-12 p-md-12 txt-danger">
+        <h4 class="txt-primary">{{businessPartner.cardname}} ({{businessPartner.aliasname}})</h4>
+    </div>
+</div>
+<div class="p-grid p-mt-2">
+    <div class="p-col-12 p-md-12">
+        <h5>Buscar pagos</h5>
+        <div class="p-formgroup-inline">
+            <div class="p-field">
+                <p-calendar inputId="basic1" [(ngModel)]="docDate1" dateFormat="yy-mm-dd"></p-calendar>
+            </div>
+            <div class="p-field">
+                <p-calendar inputId="basic2" [(ngModel)]="docDate2" dateFormat="yy-mm-dd"></p-calendar>
+            </div>
+            <p-button label="Buscar" icon="pi pi-search" (click)="onClickBuscarFechas()" styleClass="p-button-sm bg-primary"></p-button>
+        </div>
+        <div id="TABLA">
+            <p-table [value]="facturasPagadas" sortField="FolioPago" sortMode="single" (onSort)="onSort()">
+                <ng-template pTemplate="caption">
+                    Facturas pagadas
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th scope="col" class="p-text-left">Folio pago</th>
+                        <th scope="col">Fecha del pago</th>
+                        <th scope="col">Forma de pago</th>
+                        <th scope="col" class="p-text-right">Importe Pagado</th>
+                        <th scope="col" class="p-text-right">Importe Factura</th>
+                        <th scope="col" class="p-text-right">Pendiente</th>
+                        <th scope="col" class="p-text-center">Folio factura</th>
+                        <th scope="col">Fecha factura</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-facturasPagadas let-rowIndex="rowIndex">
+                    <tr *ngIf="rowGroupMetadata[facturasPagadas.FolioPago].index === rowIndex">
+                        <td colspan="8" data-label="Folio Pago"><b>{{facturasPagadas.FolioPago}}</b></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td data-label="Fecha">{{facturasPagadas.FechaPago}}</td>
+                        <td data-label="Forma de pago">{{facturasPagadas.FormaPago}}</td>
+                        <td data-label="Importe pagado" class="p-text-right">{{facturasPagadas.MontoPagado | currency: 'USD'}}</td>
+                        <td data-label="Importe factura" class="p-text-right">{{facturasPagadas.ImporteFactura | currency: 'USD'}}</td>
+                        <td data-label="Pendiente" class="p-text-right">{{facturasPagadas.Pendiente | currency: 'USD'}}</td>
+                        <td data-label="Folio factura" class="p-text-center">{{facturasPagadas.Factura}}</td>
+                        <td data-label="Fecha factura">{{facturasPagadas.FechaFactura}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <td class="p-text-right" colspan="3">Total Pagado</td>
+                        <td class="p-text-right">{{sumPagado | currency: 'USD'}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div *ngIf="loading" class="p-text-center"><p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner></div>
+        </div>
+    </div><!--/p-col-12-->
+</div>

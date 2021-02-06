@@ -1,0 +1,42 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="!businessPartner" class="center"><p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner></div>
+
+<div *ngIf="businessPartner" class="p-grid p-mt-2">
+    <div class="p-col-12 p-md-12">
+        <h4 class="txt-primary">Bienvenido: {{businessPartner.cardname}} ( {{businessPartner.aliasname}} )</h4>
+    </div>
+</div>
+
+<div *ngIf="businessPartner" class="p-grid p-mt-2">
+    <div class="p-col-12 p-md-6 p-lg-3">
+        <div *ngIf="invoices" class="card">
+            <h4>Facturas pendientes de pago</h4>
+            <p-dataView #dv [value]="invoices" [paginator]="true" [rows]="4" layout="list">
+                <ng-template let-invoices pTemplate="listItem">
+                    <div class="p-col-12 bg-warning p-shadow-3 p-marg p-padd-10">
+                        <div class="font-13"><b>Folio: {{invoices.DocNum}}</b></div>
+                        <div class="font-13">Total: $ {{invoices.DocTotal | currency:'USD':''}} {{invoices.DocCur}}</div>
+                        <div class="font-13">Fecha: {{invoices.DocDate}}</div>
+                    </div>
+                </ng-template>
+            </p-dataView>
+        </div><!--/card-->
+    </div>
+    <div class="p-col-12 p-md-6 p-lg-4">
+        <div *ngIf="itemsSales" class="card">
+            <h4>Productos más populares</h4>
+            <p-dataView #dv [value]="itemsSales" [paginator]="true" [rows]="5" layout="list">
+                <ng-template let-itemsSales pTemplate="listItem">
+                    <div class="p-col-12 bg-success p-shadow-3 p-marg p-padd-10">
+                        <div class="font-12">{{itemsSales.Dscription}}</div>
+                        <div class="font-13">Cantidad: {{itemsSales.Quantity | number:'1.2'}}</div>
+                    </div>
+                </ng-template>
+            </p-dataView>
+        </div>
+    </div>
+    <div class="p-col-12 p-md-6 p-lg-5">
+        <p-chart type="bar" [data]="dataChart"></p-chart>
+    </div>
+</div><!--/p-grid-->

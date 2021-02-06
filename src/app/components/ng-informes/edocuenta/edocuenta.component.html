@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+<div class="p-grid p-mt-2">
+    <div *ngIf="businessPartner" class="p-col-12 p-md-12">
+        <h4 class="txt-primary">{{businessPartner.cardname}} ({{businessPartner.aliasname}})</h4>
+    </div>
+</div>
+<div class="p-grid p-mt-2">
+    <div class="p-col-12 p-md-12">
+        <h5>Filtrar por rango de fecha</h5>
+        <div class="p-formgroup-inline">
+            <div class="p-field">
+                <p-calendar inputId="basic1" [(ngModel)]="docDate1" dateFormat="yy-mm-dd"></p-calendar>
+            </div>
+            <div class="p-field">
+                <p-calendar inputId="basic2" [(ngModel)]="docDate2" dateFormat="yy-mm-dd"></p-calendar>
+            </div>
+            <p-button label="Buscar" icon="pi pi-search" (click)="onClickBuscarFechas()" styleClass="p-button-sm bg-primary"></p-button>
+        </div>
+        <div class="TABLE">
+            <p-table [value]="saldoCliente">
+                <ng-template pTemplate="caption">
+                    Saldo de cuenta 
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Origen</th>
+                        <th scope="col">Folio</th>
+                        <th scope="col">Detalle</th>
+                        <th scope="col" class="p-text-right">Saldo vencido</th>
+                        <th scope="col" class="p-text-right">Cargo</th>
+                        <th scope="col" class="p-text-right">Abono</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-saldoCliente>
+                    <tr class="p-row-tr">
+                        <td data-label="Fecha">{{saldoCliente.RefDate}}</td>
+                        <td data-label="Tipo">{{saldoCliente.TransType}}</td>
+                        <td data-label="Tipo">{{saldoCliente.Ref1}}</td>
+                        <td data-label="Tipo">{{saldoCliente.LineMemo}}</td>
+                        <td data-label="Saldo vencido" class="p-text-right">{{saldoCliente.BalDueDeb | currency: 'USD'}}</td>
+                        <td data-label="0 - 30" class="p-text-right">{{saldoCliente.Debit | currency: 'USD'}}</td>
+                        <td data-label="31 - 60" class="p-text-right">{{saldoCliente.Credit | currency: 'USD'}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <td class="p-text-right" colspan="4">Total</td>
+                        <td class="p-text-right">{{sumSaldo | currency: 'USD'}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div *ngIf="loading" class="p-text-center"><p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner></div>
+        </div>
+    </div><!--/p-col-12-->
+</div>

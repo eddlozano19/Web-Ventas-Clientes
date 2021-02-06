@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+<div class="p-grid p-mt-2">
+    <div *ngIf="businessPartner" class="p-col-12 p-md-12 txt-danger">
+        <h4 class="txt-primary">{{businessPartner.cardname}} ({{businessPartner.aliasname}})</h4>
+    </div>
+</div>
+<div class="p-grid p-mt-2">
+    <div class="p-col-12 p-md-12">
+        <div class="">
+            <p-table [value]="carteraCliente">
+                <ng-template pTemplate="caption">
+                    Antigüedad de saldos de clientes
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th scope="col">Nº documento</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Fecha vencimiento</th>
+                        <th scope="col" class="p-text-right">Saldo vencido</th>
+                        <th scope="col" class="p-text-right">0 - 30</th>
+                        <th scope="col" class="p-text-right">31 - 60</th>
+                        <th scope="col" class="p-text-right">61 - 90</th>
+                        <th scope="col" class="p-text-right">91 - 120</th>
+                        <th scope="col" class="p-text-right">121 +</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-carteraCliente>
+                    <tr class="p-row-tr">
+                        <td scope="row" data-label="Nº documento">{{carteraCliente.DocNum}}</td>
+                        <td data-label="Tipo">{{carteraCliente.TipoDoc}}</td>
+                        <td data-label="Fecha">{{carteraCliente.Fecha}}</td>
+                        <td data-label="Fecha vencimiento">{{carteraCliente.FechaVencimiento}}</td>
+                        <td data-label="Saldo vencido" class="p-text-right">{{carteraCliente.Saldo | currency: 'USD'}}</td>
+                        <td data-label="0 - 30" class="p-text-right">{{carteraCliente.C_1_30 | currency: 'USD'}}</td>
+                        <td data-label="31 - 60" class="p-text-right">{{carteraCliente.C_31_60 | currency: 'USD'}}</td>
+                        <td data-label="61 - 90" class="p-text-right">{{carteraCliente.C_61_90 | currency: 'USD'}}</td>
+                        <td data-label="91 - 120" class="p-text-right">{{carteraCliente.C_91_120 | currency: 'USD'}}</td>
+                        <td data-label="120 +" class="p-text-right">{{carteraCliente.C_121_mas | currency: 'USD'}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <td class="p-text-right" colspan="4">Total</td>
+                        <td class="p-text-right">{{sumSaldo | currency: 'USD'}}</td>
+                        <td class="p-text-right">{{sum30 | currency: 'USD'}}</td>
+                        <td class="p-text-right">{{sum60 | currency: 'USD'}}</td>
+                        <td class="p-text-right">{{sum90 | currency: 'USD'}}</td>
+                        <td class="p-text-right">{{sum120 | currency: 'USD'}}</td>
+                        <td class="p-text-right">{{sumMas | currency: 'USD'}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div *ngIf="loading" class="p-text-center"><p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner></div>
+        </div>
+    </div><!--/p-col-12-->
+</div>
